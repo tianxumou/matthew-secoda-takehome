@@ -5,8 +5,8 @@ import { theme } from '../theme';
 import { ReactQueryProvider } from './ReactQueryProvider';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Secoda Takehome',
+  description: 'Secoda takehome assignemnt',
 };
 
 export default function RootLayout({ children }: { children: any }) {

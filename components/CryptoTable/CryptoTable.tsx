@@ -3,6 +3,13 @@
 import { Group, MantineProvider, ScrollArea, Table, Text } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnNames, CryptoItem, MIN_IN_MS } from '../common';
+import { Icon } from './icons';
+
+// to format the money amount input.
+const { format } = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
 
 export function CryptoTable() {
   const {
@@ -56,18 +63,21 @@ export function CryptoTable() {
                   <Table.Tr key={crypto.id}>
                     <Table.Td>
                       <Group gap="sm">
-                        {/* TODO: add icons  */}
-                        {/* <Avatar size={26} src={crypto.avatar} radius={26} /> */}
+                        <Icon name={crypto.symbol} />
                         <Text size="sm" fw={500}>
                           {crypto.name} ({crypto.symbol})
                         </Text>
                       </Group>
                     </Table.Td>
-                    <Table.Td>${crypto.quote.USD.price.toFixed(2)}</Table.Td>
-                    <Table.Td>${crypto.quote.USD.market_cap.toFixed(2)}</Table.Td>
+                    <Table.Td>{format(crypto.quote.USD.price)}</Table.Td>
+                    <Table.Td>{format(crypto.quote.USD.market_cap)}</Table.Td>
                     <Table.Td>{crypto.circulating_supply.toFixed(3)}</Table.Td>
-                    <Table.Td>{crypto.quote.USD.percent_change_24h.toFixed(2)}%</Table.Td>
-                    <Table.Td>${crypto.quote.USD.volume_24h.toFixed(4)}</Table.Td>
+                    <Table.Td
+                      style={{ color: crypto.quote.USD.percent_change_24h > 0 ? 'green' : 'red' }}
+                    >
+                      {crypto.quote.USD.percent_change_24h.toFixed(2)}%
+                    </Table.Td>
+                    <Table.Td>{format(crypto.quote.USD.volume_24h)}</Table.Td>
                   </Table.Tr>
                 ))
               : null}
