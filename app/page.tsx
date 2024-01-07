@@ -1,11 +1,11 @@
-import { Welcome } from '../components/Welcome/Welcome';
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
+import { CryptoTable } from '../components/CryptoTable/CryptoTable';
 
 export default function HomePage() {
   return (
     <>
-      <Welcome />
-      <ColorSchemeToggle />
+      <section style={{ margin: '40px' }}>
+        <CryptoTable />
+      </section>
     </>
   );
 }

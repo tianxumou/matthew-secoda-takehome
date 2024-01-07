@@ -1,9 +1,9 @@
 import { render, screen } from '@/test-utils';
-import { Welcome } from './Welcome';
+import { CryptoTable } from './CryptoTable';
 
-describe('Welcome component', () => {
-  it('has correct Next.js theming section link', () => {
-    render(<Welcome />);
+describe('Crypto Table Component', () => {
+  it('has correct CryptoTable component rendering', () => {
+    render(<CryptoTable />);
     expect(screen.getByText('this guide')).toHaveAttribute(
       'href',
       'https://mantine.dev/guides/next/'
