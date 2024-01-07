@@ -1,24 +1,36 @@
 'use client';
 
 import { Group, MantineProvider, ScrollArea, Table, Text } from '@mantine/core';
-import { ColumnNames } from '../common';
+import { useQuery } from '@tanstack/react-query';
+import { ColumnNames, CryptoItem } from '../common';
 
-// add fetched data in later
 export function CryptoTable() {
-  // const rows = data.map((item) => (
-  //   <Table.Tr key={item.id}>
-  //     <Table.Td>
-  //       <Group gap="sm">
-  //         {/* <Avatar size={26} src={item.avatar} radius={26} /> */}
-  //         <Text size="sm" fw={500}>
-  //           {item.name}
-  //         </Text>
-  //       </Group>
-  //     </Table.Td>
-  //     <Table.Td>{item.email}</Table.Td>
-  //     <Table.Td>{item.job}</Table.Td>
-  //   </Table.Tr>
-  // ));
+  const {
+    data: cryptoList,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['cryptoList'],
+    queryFn: () =>
+      fetch('api/cryptoCurrencies')
+        .then((res) => res.json())
+        .then((response) => response.data),
+  });
+
+  //TODO: add shimmer loading effects
+  if (isLoading) {
+    return (
+      <Text fw={500} ta="center">
+        loading...
+      </Text>
+    );
+  }
+
+  if (error) {
+    <Text fw={500} ta="center">
+      {error.message}
+    </Text>;
+  }
 
   return (
     <MantineProvider defaultColorScheme="light">
@@ -37,7 +49,28 @@ export function CryptoTable() {
               ))}
             </Table.Tr>
           </Table.Thead>
-          {/* <Table.Tbody>{rows}</Table.Tbody> */}
+          <Table.Tbody>
+            {cryptoList
+              ? cryptoList.map((crypto: CryptoItem) => (
+                  <Table.Tr key={crypto.id}>
+                    <Table.Td>
+                      <Group gap="sm">
+                        {/* TODO: add icons  */}
+                        {/* <Avatar size={26} src={crypto.avatar} radius={26} /> */}
+                        <Text size="sm" fw={500}>
+                          {crypto.name} ({crypto.symbol})
+                        </Text>
+                      </Group>
+                    </Table.Td>
+                    <Table.Td>${crypto.quote.USD.price.toFixed(2)}</Table.Td>
+                    <Table.Td>${crypto.quote.USD.market_cap.toFixed(2)}</Table.Td>
+                    <Table.Td>{crypto.circulating_supply.toFixed(3)}</Table.Td>
+                    <Table.Td>{crypto.quote.USD.percent_change_24h.toFixed(2)}%</Table.Td>
+                    <Table.Td>${crypto.quote.USD.volume_24h.toFixed(4)}</Table.Td>
+                  </Table.Tr>
+                ))
+              : null}
+          </Table.Tbody>
         </Table>
       </ScrollArea>
     </MantineProvider>
