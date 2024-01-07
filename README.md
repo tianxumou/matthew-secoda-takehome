@@ -26,9 +26,9 @@ Error UI:
 ### Third party used and how to install: 
 
 (1) Icons: npm install react-icons --save <br/>
-(2) Loading Shimmer Skeleton: npm install react-loading-skeleton
-(3) Used Mantine get started template: https://mantine.dev/getting-started/#get-started-with-a-template (https://github.com/mantinedev/next-app-template)
-(4) Mock Service Worker API for testing: npm install msw --save-dev
+(2) Loading Shimmer Skeleton: npm install react-loading-skeleton <br/>
+(3) Used Mantine get started template: https://mantine.dev/getting-started/#get-started-with-a-template (https://github.com/mantinedev/next-app-template) <br/>
+(4) Mock Service Worker API for testing: npm install msw --save-dev <br/>
   
 ### Build and dev scripts
 
