@@ -2,7 +2,9 @@
 
 import { Group, MantineProvider, ScrollArea, Table, Text } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { ColumnNames, CryptoItem, MIN_IN_MS } from '../common';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { ColumnNames, CryptoItem, MIN_IN_MS, TOP_RESULTS_DISPLAY } from '../common';
 import { Icon } from './icons';
 
 // to format the money amount input.
@@ -25,19 +27,40 @@ export function CryptoTable() {
     refetchInterval: MIN_IN_MS,
   });
 
-  //TODO: add shimmer loading effects
-  if (isLoading) {
+  if (isLoading || error) {
     return (
-      <Text fw={500} ta="center">
-        loading...
-      </Text>
+      <Table verticalSpacing="sm">
+        <Table.Thead>
+          <Table.Tr>
+            {ColumnNames.map((field) => (
+              <th key={field}>{field}</th>
+            ))}
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {Array(TOP_RESULTS_DISPLAY)
+            .fill(0)
+            .map((_, index) => (
+              <Table.Tr key={index}>
+                {Array(ColumnNames.length)
+                  .fill(0)
+                  .map((__, i) => (
+                    <Table.Td key={i}>
+                      <Skeleton />
+                    </Table.Td>
+                  ))}
+              </Table.Tr>
+            ))}
+        </Table.Tbody>
+        <Table.Caption>
+          {error ? (
+            <Text c="red" fw={500}>
+              Something went wrong, Please Try again.
+            </Text>
+          ) : null}
+        </Table.Caption>
+      </Table>
     );
-  }
-
-  if (error) {
-    <Text fw={500} ta="center">
-      {error.message}
-    </Text>;
   }
 
   return (

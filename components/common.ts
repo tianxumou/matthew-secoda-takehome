@@ -24,3 +24,4 @@ export type CryptoItem = {
 
 // one min is 60000 in ms.
 export const MIN_IN_MS = 60000;
+export const TOP_RESULTS_DISPLAY = 10;
