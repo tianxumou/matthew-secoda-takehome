@@ -1,4 +1,6 @@
 // api/cryptoCurrencies
+export const revalidate = 60; // set default revalidation time in seconds
+
 export async function GET() {
   const requestHeaders: HeadersInit = new Headers();
   requestHeaders.set('Content-Type', 'application/json');

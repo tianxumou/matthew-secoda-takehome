@@ -2,7 +2,7 @@
 
 import { Group, MantineProvider, ScrollArea, Table, Text } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { ColumnNames, CryptoItem } from '../common';
+import { ColumnNames, CryptoItem, MIN_IN_MS } from '../common';
 
 export function CryptoTable() {
   const {
@@ -15,6 +15,7 @@ export function CryptoTable() {
       fetch('api/cryptoCurrencies')
         .then((res) => res.json())
         .then((response) => response.data),
+    refetchInterval: MIN_IN_MS,
   });
 
   //TODO: add shimmer loading effects
